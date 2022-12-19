@@ -1,0 +1,155 @@
+---
+title: "GLAD ARD Landsat Tools tutorial"
+author: "Jeronimo Rodriguez-Escobar"
+date: "9/13/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Goals:
+
+Learn the basics of the ARD data, how to obtain tghe data, extract phenollogy metrics and build gap filled radiometrically consistent mosaics
+
+## Introduction
+
+The Global Land Analysis and Discovery (GLAD) team at the University of Maryland has developed and implemented an automated Landsat data processing system that generates globally consistent analysis ready data (GLAD Landsat ARD) as inputs for land cover and land use mapping and change analysis.
+The GLAD Landsat ARD represents 16-day time-series of globally consistent, tiled Landsat normalized surface reflectance from 1997 to present, updated annually, and suitable for operational land cover change applications
+
+
+### Conversion To Radiometric Quantity 
+
+In ARD, only spectral bands with matching wavelengths between TM, ETM+, and OLI/TIRS sensors are processed. For  thermal infrared data, a high-gain mode thermal band (band 62) of the ETM+ sensor and 10.6–11.19μm thermal band (band 10) of the TIRS sensor are used. Landsat Collection 1 data contain radiation measurements for reflective visible/infrared bands recorded as integer digital numbers (DNs). This data is converted into  top-of-atmosphere (TOA) reflectance, scaled  across all Landsat sensors. Spectral reflectance (value range from zero to one) is scaled from 1 to 40,000 and recorded as a 16-bit unsigned integer value.
+
+### Observation Quality Assessment
+The GLAD observation quality assessment model developed represents a set of regionally adapted decision tree ensembles to map the likelihood of a pixel to represent cloud, cloud shadow, heavy haze, and, for clear-sky observations, water or snow/ice. The model outputs represent likelihoods of assigning a pixel to the cloud, shadow, haze, snow/ice, and water classes. The masks were subsequently aggregated into an integral observation Quality Flag (QF) that highlights cloud/shadow contaminated observations, separates topographic shadows from likely cloud shadows, and specifies the proximity to clouds and cloud shadows.
+
+### Reflectance Normalization 
+## GLAD Tools V1.1 Installation (Windows 10)
+
+### 1. Perl
+
+1. Obtain [Strawberry Perl](www.strawberryperl.com) and install the 64 bit version
+
+2. QGIS and OSGeo4W
+QGIS is used as the source for the GDAL libraries and tools that are required forthe ARD tools to run. Additionally it is recomended to have following plug-ins (optional for the moment): 
+* Send2GE (Send to Google Earth)
+* Quick Map Services (basemaps)
+
+3. ARD Tools.
+  * [Download ARD Tools](https://glad.umd.edu/Potapov/ARD/GLAD_1.1.zip)
+  * Create the folder C:\GLAD_1.1 in your local machine and decompress the zip file in that location.
+  * Right click on **ADD_PATH_for_GLAD_v1.1.bat** and select "Run as administrator"
+  * Reboot the computer
+4. Navigate to your working folder
+* In the Windows command line (CMD) navigate to the directry that you are going to use as working folder. It can be in the local machine or in a mapped network drive. just use 
+you are going to work. In my casze, i am workin on the Y drive
+
+[Change Directory]() 
+  
+5. OSGeo4W
+ Locate the OSGeo4w folder. In the machines in the Salt Lab it is located here: ["C:\OSGeo4w"](xx)
+ 
+6. Environmental Varibles.
+* In the GLAD working folder, run the command "path" to make sure that the variables were set correclty.
+
+
+
+## Select Tiles for your study Area.
+ Use **select by location** and select the tiles that intersect with your study area.  
+ 
+ In this case, we´re going to use the Philly Area as an example. Copy the list in a .txt file and save it in your working folder (***it is not the GLAD_1.1 folder in the C folder drive***)
+ 
+074W_39N  
+075W_39N  
+074W_40N  
+075W_40N  
+
+
+Foe each 1x1 tile, data is stored as  16 days periods between january 1998 (415) and december (943). There are 23 periods per year. ***Note** Not all tiles have valid pixels!!
+
+## Download the ARD data. 
+
+Set your tile list, the date interval you want to obtain, and the destination folder where you want to store the data. 
+
+***Note:*** Each tile/year requires +- 5GB of storage space, it adds up fast, be careful. 
+I already downloaded all the tiles for Colombia, it uses more  than 7TB of space. 
+
+
+```
+perl C:/GLAD_1.1/download_V1.1.pl <<your_username>> <<your_password>> tiles_philly.txt 917 943 C:/ARD_tutorial
+```
+
+## Download the SRTM Data (optional)
+
+ARD tools offers the possibility to obtain SRTM elevation data for the same study area. It can be quite handy, including sloep and aspect. The structure is the same, just change the perl script
+
+```
+perl C:/GLAD_1.1/download_SRTM.pl <<your_username>> <<your_password>> tiles_philly.txt C:/ARD_tutorial
+```
+
+## GLAD Data Structure
+
+
+
+
+
+##Multi temporal Metric Extraction
+
+This might be the most useful part so far, and the part that we´re going to use more often.  GLAD Tools lets calculate two types of metrics, **annual phenological metrics** and **annual change detection metrics**, for the two most common objectives: annual land cover mapping and detection of land cover changes between two consecutive years.
+
+There are 4 types of phenollogical metrics, pheno A, pheno B, pheno C and pheno D, depending on the mapping objectives, the availalble computing and strorage capacity. 
+We´re going to focus on pheno C and D, but the obtention is the same for all cases.  
+
+pheno C: standard, richest repository, used for global mapping
+pheno D: produces annual cluid free Landsat Image composites. It requires the less space and computes fastest.  Today we´re going to work with them.
+
+## Phenological Metrics
+
+For annual land cover and vegetation structure mapping models extrapolation in space and time. Generated primarily using  observations collected during a given  calendar year (January 1 – December 31). Data from the previous years may be used to fill gaps. Includes two stages: (1) select  clear-sky observations and fillz gaps in the observation time series; and (2) extract reflectance distribution statistics from the selected observation time-series
+
+
+1. Set the metrics extration parameter file (txt). Is sets the metrics yoiu want to extract, the list of  tiles, the target year, the location of the input data, the folder where the data obtained  will be stored, the number of cores to process and the number of years that will be used to fill the gaps 
+
+mettype=pheno_D  
+tilelist=tiles_philly.txt  
+year=2020  
+input=C:/ARD_tutorial  
+output=C:/ARD_tutorial/Pheno_d  
+threads=8  
+gapfill=2  
+
+
+run the metrics extraction line in the CMD
+```
+perl C:/GLAD_1.1/build_metrics.pl parameter_philly.txt
+```
+
+2. Set the mosaicking parameter file
+
+
+source=C:/ARD_tutorial/Pheno_d   
+list=tiles_philly.txt  
+year=2020  
+outname=philly_ARD  
+bands=blue_av2575, green_av2575, red_av2575, nir_av2575, swir1_av2575, swir2_av2575, TEC_pf, TEC_prcwater  
+ogr=C:/OSGeo4w/OSGeo4W.bat  
+
+```
+perl C:/GLAD_1.1/mosaic_tiles.pl param_mosaic_2020.txt
+```
+
+***Attention*** 
+*Make sure that the metrics and tiles for the year you´re building the mosaic are available. 
+*It will add the year to the file name
+* the order of the bands in the param file will be maintained
+* Having the correct route for the ogr is key for this script to work properly.
+
+
+## Reference:
+
+Potapov, P., Hansen, M.C., Kommareddy, I., Kommareddy, A., Turubanova, S., Pickens, A., Adusei, B., Tyukavina A., and Ying, Q., 2020. Landsat analysis ready data for global land cover and land cover change mapping. Remote Sens. 2020, 12, 426; doi:10.3390/rs12030426 https://www.mdpi.com/2072-4292/12/3/426
