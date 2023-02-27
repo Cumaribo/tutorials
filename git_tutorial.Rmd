@@ -6,7 +6,8 @@ date: "`r Sys.Date()`"
 urlcolor: blue
 linkcolor: red
 #output: github_document
-output: html_document
+#output: html_document
+output: md_document
 ---
 
 ```{r setup, include=FALSE}
