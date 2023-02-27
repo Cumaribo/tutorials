@@ -105,10 +105,10 @@ It is very common to threat Git and Github indistinctly as the same thing, it is
 * Git is the software that records changes to a set of files. 
 * GitHub is a hosting service that provides a Git-aware home for such projects on the internet. (Bryan, 2017)
 
-![Git and Github](/Users/sputnik/Documents/ARD_tuytorial/Images_rmd/img_git1.jpg)
+![Git and Github](Images_rmd/img_git1.jpg)
 
 
-![Push and Pull](/Users/sputnik/Documents/ARD_tuytorial/Images_rmd/img_git2.jpg)
+![Push and Pull](Images_rmd/img_git2.jpg)
 
 # Connecting with the Remote GitHub Repository 
 This [link](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git) has the instructions to set the log in credential from your machines. It depends on the OS. It can be confusing at the beginning (it was and still is for me), because there are several ways to set it up (token, ssh, 2fA, password) and it is easy to forget. Insdtead of creating new instructions, just follow the instuctions. If you still experiment issues, contact me.
@@ -122,7 +122,7 @@ In this operation, what happens is that the new repository, created when ypou cr
 
 These are the main strengths of the Distributed Version Control Systems (DVCS) 
 ##  Create a new repository on the GitHub website
-![New Repository](/Users/sputnik/Documents/ARD_tuytorial/Images_rmd/new_repoGH.png)
+![New Repository](Images_rmd/new_repoGH.png)
 
 2 Go tho the Terminal tab, next to *Console* in your RStudio GUI
 
@@ -153,3 +153,6 @@ $ git remote add origin https://github.com/USER/REPO.git
 # Set remote repository as origin (this only needs to be done once) and push to remote
 $ git push --set-upstream origin master
 ``` 
+# GitHub and RStudio
+
+The basic git operations can be easilty run directly from RStudio. There is a nice intergration between them. The basics can be found [**here**](https://resources.github.com/github-and-rstudio/).
