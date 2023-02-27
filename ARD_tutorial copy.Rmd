@@ -46,8 +46,8 @@ QGIS is used as the source for the GDAL libraries and tools that are required fo
   * Right click on **ADD_PATH_for_GLAD_v1.1.bat** and select "Run as administrator"
   * Reboot the computer
 4. Navigate to your working folder
-* In the Windows command line (CMD) navigate to the directory that you are going to use as working folder. It can be in the local machine or in a mapped network drive. just use 
-you are going to work. In my case, i am workin on the Y drive
+* In the Windows command line (CMD) navigate to the directry that you are going to use as working folder. It can be in the local machine or in a mapped network drive. just use 
+you are going to work. In my casze, i am workin on the Y drive
 
 [Change Directory]() 
   
@@ -76,7 +76,7 @@ Foe each 1x1 tile, data is stored as  16 days periods between january 1998 (415)
 
 Set your tile list, the date interval you want to obtain, and the destination folder where you want to store the data. 
 
-***Note:*** Each tile/year requires around 5GB of storage space, it adds up fast, be careful. 
+***Note:*** Each tile/year requires +- 5GB of storage space, it adds up fast, be careful. 
 I already downloaded all the tiles for Colombia, it uses more  than 7TB of space. 
 
 
@@ -93,6 +93,9 @@ perl C:/GLAD_1.1/download_SRTM.pl <<your_username>> <<your_password>> tiles_phil
 ```
 
 ## GLAD Data Structure
+
+
+
 
 
 ##Multi temporal Metric Extraction
@@ -146,9 +149,7 @@ perl C:/GLAD_1.1/mosaic_tiles.pl param_mosaic_2020.txt
 * the order of the bands in the param file will be maintained
 * Having the correct route for the ogr is key for this script to work properly.
 
-4008993041394479
-12/26
-697
+
 ## Reference:
 
 Potapov, P., Hansen, M.C., Kommareddy, I., Kommareddy, A., Turubanova, S., Pickens, A., Adusei, B., Tyukavina A., and Ying, Q., 2020. Landsat analysis ready data for global land cover and land cover change mapping. Remote Sens. 2020, 12, 426; doi:10.3390/rs12030426 https://www.mdpi.com/2072-4292/12/3/426
