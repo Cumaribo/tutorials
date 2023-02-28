@@ -5,9 +5,9 @@ author: "Jeronimo Rodriguez-Escobar"
 date: "`r Sys.Date()`"
 urlcolor: blue
 linkcolor: red
-#output: github_document
+output: github_document
 #output: html_document
-output: md_document
+#output: md_document
 ---
 
 ```{r setup, include=FALSE}
@@ -117,12 +117,15 @@ This [link](https://docs.github.com/en/get-started/getting-started-with-git/cach
 # Adding locally created repositories to GitHub
 
 In my opinion, the most common and intuitive way to start working in GitHub is by creating a repositoty on the website. However, it might be better to create if from the R project and then [adding a remote repository](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories)
-In this operation, what happens is that the new repository, created when ypou created the proyect will be stored in the GitHub server. This has three main purposes: 
-- Get a backup for you code
-- Synchronize between multiple workstations and users
+In this operation, what happens is that the new repository, created together with the new proyect will be stored in the GitHub server. This has three main purposes:
+
+* Get a backup for you code outside your local machine
+* Track changes and the evolution of the software and workflows you are developing
+* Synchronize between multiple workstations and users
 
 These are the main strengths of the Distributed Version Control Systems (DVCS) 
 ##  Create a new repository on the GitHub website
+
 ![New Repository](Images_rmd/new_repoGH.png)
 
 2 Go tho the Terminal tab, next to *Console* in your RStudio GUI
