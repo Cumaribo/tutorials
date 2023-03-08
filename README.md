@@ -6,8 +6,7 @@ Jeronimo Rodriguez-Escobar
 # Git
 
 **NOTE**. This is an ongoing document, it is not complete and can be
-improved, but it already has some basic instructions. Is part of a
-repository contained [**here**](https://github.com/Cumaribo/tutorials).
+improved, but it already has some basic instructions.
 
 Git is a *distributed version control* system. This
 [**document**](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjvhMWpo__7AhX4mXIEHem0DU4QFnoECA8QAQ&url=https%3A%2F%2Fpeerj.com%2Fpreprints%2F3159.pdf&usg=AOvVaw1G8aYNwj329N3GzC7pBSOQ)
